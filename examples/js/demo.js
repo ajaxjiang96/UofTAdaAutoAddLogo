@@ -3,7 +3,6 @@
 $(document).ready(function() {
 
     let colors = {
-        //   "auto": ["#" + rgbToHex(col[0], col[1], col[2]), "\"#ffffff\""],
         "anonymous": ["Anonymous", "#56CBBF", "#C2EDFB", "\"#C2EDFB\""],
         "blue": ["Blue", "#81D2F4", "#1D2A48", "\"#1D2A48\""],
         "cyanStone": ["Cyan Stone", "#B0BEC5", "#263238", "\"#263238\""],
@@ -42,10 +41,26 @@ $(document).ready(function() {
     };
 
 
+    // https://24ways.org/2010/calculating-color-contrast/
+    let getContrastYIQ = function(hexcolor) {
+        // hexcolor = rgb2hex(hexcolor);
+        console.log(hexcolor);
+        var r = parseInt(hexcolor.substr(1, 2), 16);
+        var g = parseInt(hexcolor.substr(3, 2), 16);
+        var b = parseInt(hexcolor.substr(5, 2), 16);
+        var yiq = ((r * 299) + (g * 587) + (b * 114)) / 1000;
+        if (yiq >= 128) {
+            // console.log("#000000");
+            return "\"#000000\"";
+        } else {
+            // console.log("#FFFFFF");
+            return "\"#FFFFFF\"";
+        }
+    }
 
     var drawLog = function(logo, back) {
-        // var ctx = ($('#myCanvas'))[0].getContext("2d");
-        var download = ($('#downloadCanvas'))[0].getContext("2d");
+        var ctx = ($('#myCanvas'))[0].getContext("2d");
+        // var download = ($('#downloadCanvas'))[0].getContext("2d");
 
         var data = '<?xml version="1.0" encoding="utf-8"?>' +
             '<svg version="1.1" id="图层_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="0 0' +
@@ -69,10 +84,10 @@ $(document).ready(function() {
         var url = DOMURL.createObjectURL(svg);
 
         img2.onload = function() {
-            // ctx.drawImage(img2, 0, 0, 256, 256);
-            download.drawImage(img2, 0, 0, 1000, 1000)
+            ctx.drawImage(img2, 0, 0, 1024, 1024);
+            console.log("drawLog");
             DOMURL.revokeObjectURL(url);
-            $('#preview').prop("src", ($('#downloadCanvas')[0]).toDataURL())
+            $('#preview').prop("src", ($('#myCanvas')[0]).toDataURL())
 
         }
         img2.src = url;
@@ -190,15 +205,21 @@ $(document).ready(function() {
     };
 
     var loadCanvas = function($image, col) {
-        console.log(rgbToHex(col[0], col[1], col[2]))
-        // var ctx = ($('#myCanvas'))[0].getContext("2d");
-        var download = ($('#downloadCanvas'))[0].getContext("2d");
+        var ctx = ($('#myCanvas'))[0].getContext("2d");
+        // var download = ($('#downloadCanvas'))[0].getContext("2d");
         // ctx.drawImage($image[0], 0, 0, $image[0].width, $image[0].height,
         //     0, 0, 256, 256);
-        download.drawImage($image[0], 0, 0, $image[0].width, $image[0].height,
-            0, 0, 1000, 1000);
+        ctx.drawImage($image[0], 0, 0, $image[0].width, $image[0].height,
+            0, 0, 1024, 1024);
+        console.log("loadCanvas");
 
-        $('#preview').prop("src", ($('#downloadCanvas')[0]).toDataURL())
+        $('#preview').prop("src", ($('#myCanvas')[0]).toDataURL())
+        $("#machineLearnedColor1").css("background-color", "#" + rgbToHex(col[0], col[1], col[2]) );
+        let back = getContrastYIQ("#" + rgbToHex(col[0], col[1], col[2])).substr(1, 7);
+        console.log(back);
+        $("#machineLearnedColor2").css("background-color", back);
+        $("#machineLearned").show();
+        $("#machineLearned").click();
     }
 
     if (Modernizr.draganddrop && !!window.FileReader
@@ -206,6 +227,7 @@ $(document).ready(function() {
     ) {
 
         $('#drag-drop').show();
+        $(".mobileText").hide();
         var $dropZone = $('#drop-zone');
         var handleDragEnter = function(event) {
             $dropZone.addClass('dragging');
@@ -229,6 +251,7 @@ $(document).ready(function() {
             .on('dragover', handleDragOver)
             .on('drop', handleDrop);
     } else if (isMobile()) {
+        $(".pcText").hide();
         $('#drag-drop').show();
         $('.drag').hide();
         $('#aa').hide();
@@ -290,7 +313,7 @@ $(document).ready(function() {
     }
 
     $("#downloadButton").on("click", function() {
-        var canvas = document.getElementById("downloadCanvas");
+        var canvas = document.getElementById("myCanvas");
         var image = canvas.toDataURL();
 
         var aLink = document.createElement('a');
@@ -305,7 +328,12 @@ $(document).ready(function() {
     $(".colorCard").on("click", function() {
         let id = this.id;
         if (id == "machineLearned") {
-            drawLog("#" + rgbToHex(col[0], col[1], col[2]), "\"#ffffff\"");
+            // if (col) {
+            let color = getContrastYIQ("#" + rgbToHex(col[0], col[1], col[2]))
+                drawLog("#" + rgbToHex(col[0], col[1], col[2]), color);
+            // } else {
+            //     alert("先选择图片嘛")
+            // }
         } else {
             drawLog(colors[id][1], colors[id][3]);
         }
@@ -318,6 +346,7 @@ $(document).ready(function() {
             handleFiles(e.currentTarget.files);
         })
         input.click();
+
 
     });
 

@@ -5,7 +5,7 @@
 	<meta charset="utf-8">
 	<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
 
-	<title>Your ADA LOGO</title>
+	<title>给你的头像加上ADA角标~</title>
 
 	<meta name="description" content="Get the dominant color or color palette from an image.">
 	<meta name="author" content="Lokesh Dhakar">
@@ -29,45 +29,34 @@
 				<h2>Result</h2>
 			</div>
 			<!-- <canvas id="myCanvas" width="256" height="256" style="border:1px solid #000000; display:inline-block;"></canvas><br> -->
-			<img id="preview" width="280px" height="280px" style="border:1px solid #000000; display:inline-block;" />
-			<canvas id="downloadCanvas" width="1000" height="1000" style="border:1px solid #000000; display:none;"></canvas><br>
-			<h2>在你的头像上添加ADA角标</h2>
-
-			<!-- <select id="aa" name="aa" class="button">
-		        <option value ="">Please Select One</option>
-		        <option value ="machineLearned">Machine learned best colour</option>
-		        <option value ="blue">Blue</option>
-		        <option value ="coffee">Coffee</option>
-		        <option value ="cyanStone">cyanStone</option>
-		        <option value ="greyWhite">greyWhite</option>
-		        <option value ="Anonymous">Anonymous</option>
-		        <option value="hehe">hehe</option>
-		        <option value="izumi">izumi</option>
-		        <option value="joy">joy</option>
-		        <option value="lightpurple">lightpurple</option>
-		        <option value="sakura">sakura</option>
-		        <option value="tea">tea</option>
-		        <option value="winnie">winnie</option>
-		    </select> -->
-			<h2> 1. 上传图片 </h2>
-
-			<button id="uploadButton" type="button">选择图片</button>
-			<!-- <button id="downloadButton" type="button">Download</button> -->
-
-			<h2> 2. 选择颜色（试试Auto）</h2>
-
-			<div id="colors">
-				<div class="colorCard" id="machineLearned">
-					<div class="color1" style="background-color: rgb(86, 203, 191);"></div>
-					<div class="color2" style="background-color: rgb(194, 237, 251);"></div>
-					<div class="colorTag">Auto</div>
+			<img id="preview" src="examples/img/placeholder.jpg" width="100%" style="border:0; display:inline-block;" />
+			<canvas id="myCanvas" width="1024" height="1024" style="border:1px solid #000000; display:none;"></canvas><br>
+			<div class="actionBar">
+				<div class="buttonContainer">
+					<button id="uploadButton" type="button">选择图片</button>
 				</div>
+
+				<div id="colors">
+					<div class="colorCard" id="machineLearned" style="">
+						<div id="machineLearnedColor1" class="color1" style="background-color: #FFFFFF"></div>
+						<div id="machineLearnedColor2" class="color2" style="background-color: #FFFFFF"></div>
+						<div class="colorTag">Auto</div>
+					</div>
+				</div>
+
 			</div>
-
-			<h2> 3. 长按图片以保存</h2>
-
-
-
+			<h2>在你的头像上添加ADA角标</h2>
+			<lo>
+				<li>
+					上传图片
+				</li>
+				<li>
+					选择颜色（试试Auto）
+				</li>
+				<li>
+					<span class="mobileText">长按</span><span class="pcText">右击</span>图片以保存
+				</li>
+			</lo>
 		</div>
 
 		<!-- </div> -->
