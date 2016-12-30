@@ -1,8 +1,8 @@
 # AutoAddLogo
 
 > AutoAdd UofTADA Logo  
-> arieling.github.io/UofTAdaAutoAddLogo
-> (Mobile)ajaxjiang96.github.io/UofTAdaAutoAddLogo
+> arieling.github.io/UofTAdaAutoAddLogo  
+> (Mobile): ajaxjiang96.github.io/UofTAdaAutoAddLogo
 
 ## Function:
 
